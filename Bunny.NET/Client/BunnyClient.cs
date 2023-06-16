@@ -16,6 +16,7 @@ public partial class BunnyClient
     {
         ApiKey = apiKey;
         BaseUrl = $"{Scheme}{Host.Endpoint.Api}";
+        _apiKeysApiUrl = $"{BaseUrl}/apikey";
         _countriesApiUrl = $"{BaseUrl}/country";
         _dnsApiUrl = $"{BaseUrl}/dnszone";
         // Configure HttpClient
