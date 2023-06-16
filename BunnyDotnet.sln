@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CI Workflows", "CI Workflow
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bunny.NET.Tests", "Bunny.NET.Tests\Bunny.NET.Tests.csproj", "{8853F933-6D88-4665-9D13-AC40AE33E5D5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestClient", "TestClient\TestClient.csproj", "{9BEA3D69-0C45-4540-8D00-A4A0A08E2317}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{8853F933-6D88-4665-9D13-AC40AE33E5D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8853F933-6D88-4665-9D13-AC40AE33E5D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8853F933-6D88-4665-9D13-AC40AE33E5D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BEA3D69-0C45-4540-8D00-A4A0A08E2317}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BEA3D69-0C45-4540-8D00-A4A0A08E2317}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BEA3D69-0C45-4540-8D00-A4A0A08E2317}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BEA3D69-0C45-4540-8D00-A4A0A08E2317}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C993F40C-0D78-4E7A-95CE-EC8CBF54608C} = {95220D61-2851-4A00-BDF8-7FD77D8027AF}
