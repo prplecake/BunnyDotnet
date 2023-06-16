@@ -1,3 +1,5 @@
+using System.Net.Mime;
+using System.Text;
 using Bunny.NET.Entities;
 using Newtonsoft.Json;
 
@@ -23,6 +25,24 @@ partial class BunnyClient
         zones.AddRange(obj.Items);
         _zones = zones;
         return zones;
+    }
+    public async void UpdateRecord(int zoneId, Record record, string newValue)
+    {
+        // Prep payload
+        Dictionary<string, object?> payload = new()
+        {
+            {
+                "Id", record.Id
+            },
+            {
+                "Value", newValue
+            }
+        };
+        var stringContent = new StringContent(JsonConvert.SerializeObject(payload), Encoding.Default,
+            MediaTypeNames.Application.Json);
+        var requestUri = $"{_apiUrl}/{zoneId}/records/{record.Id}";
+        var response = await Client.PostAsync(requestUri, stringContent);
+        response.EnsureSuccessStatusCode();
     }
 }
 internal class DnsZoneApiListResponse
