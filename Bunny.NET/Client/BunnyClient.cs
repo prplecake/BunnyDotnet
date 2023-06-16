@@ -19,6 +19,7 @@ public partial class BunnyClient
         _apiKeysApiUrl = $"{BaseUrl}/apikey";
         _countriesApiUrl = $"{BaseUrl}/country";
         _dnsApiUrl = $"{BaseUrl}/dnszone";
+        _purgeApiUrl = $"{BaseUrl}/purge";
         _regionApiUrl = $"{BaseUrl}/region";
         _statisticsApiUrl = $"{BaseUrl}/statistics";
         // Configure HttpClient
