@@ -4,6 +4,19 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bunny.NET", "Bunny.NET\Bunn
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bunny.NET.Tests", "Bunny.NET.Tests\Bunny.NET.Tests.csproj", "{A260F7FE-0602-49DB-B8AA-EEE924418F97}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{95220D61-2851-4A00-BDF8-7FD77D8027AF}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CI Workflows", "CI Workflows", "{C993F40C-0D78-4E7A-95CE-EC8CBF54608C}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
+		.github\workflows\release.yml = .github\workflows\release.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +31,8 @@ Global
 		{A260F7FE-0602-49DB-B8AA-EEE924418F97}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A260F7FE-0602-49DB-B8AA-EEE924418F97}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A260F7FE-0602-49DB-B8AA-EEE924418F97}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C993F40C-0D78-4E7A-95CE-EC8CBF54608C} = {95220D61-2851-4A00-BDF8-7FD77D8027AF}
 	EndGlobalSection
 EndGlobal

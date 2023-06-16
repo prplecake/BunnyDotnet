@@ -1,0 +1,31 @@
+name: .NET Release
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet-version: [ '7.0.x' ]
+    permissions:
+      packages: write
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}
+          source-url: https://nuget.pkg.github.com/prplecake/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Pack NuGet
+        run: dotnet pack Bunny.NET/Bunny.NET.csproj -c Release
+      - name: Upload NuGet
+        run: |
+          dotnet nuget push ./Bunny.NET/bin/Release/Bunny.NET*.nupkg
