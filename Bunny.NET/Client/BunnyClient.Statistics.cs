@@ -10,7 +10,7 @@ partial class BunnyClient
         DateTime? dateFrom = null,
         DateTime? dateTo = null,
         int? pullZoneId = null,
-        int? serverZoneId  = null,
+        int? serverZoneId = null,
         bool loadErrors = false,
         bool hourly = false
     )
@@ -27,7 +27,9 @@ partial class BunnyClient
         {
             queryString = new FormUrlEncodedContent(queryParams).ReadAsStringAsync().Result;
         }
-        var response = await Client.GetAsync(string.IsNullOrEmpty(queryString) ? _statisticsApiUrl : $"{_statisticsApiUrl}?{queryString}");
+        var response = await Client.GetAsync(string.IsNullOrEmpty(queryString)
+            ? _statisticsApiUrl
+            : $"{_statisticsApiUrl}?{queryString}");
         response.EnsureSuccessStatusCode();
         string responseContent = await response.Content.ReadAsStringAsync();
         var obj = JsonConvert.DeserializeObject<Statistics>(responseContent);
