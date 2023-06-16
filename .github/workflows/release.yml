@@ -25,6 +25,14 @@ jobs:
           source-url: https://nuget.pkg.github.com/prplecake/index.json
         env:
           NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Test
+        run: dotnet test --no-build --verbosity normal --logger "trx" --results-directory "./TestResults"
+      - uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: .NET Test Results
+          path: TestResults/*.trx
+          reporter: dotnet-trx
       - name: Pack NuGet
         run: dotnet pack Bunny.NET/Bunny.NET.csproj -c Release
       - name: Upload NuGet
