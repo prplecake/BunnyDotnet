@@ -8,7 +8,7 @@ public class BunnyClientTests
     public void HttpClient_BaseUrl_HasProtocol()
     {
         var client = new BunnyClient("testing-token");
-        
+
         Assert.StartsWith(BunnyClient.Scheme, BunnyClient.BaseUrl);
     }
 }

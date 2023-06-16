@@ -8,10 +8,10 @@ namespace Bunny.NET.Client;
 public partial class BunnyClient
 {
     public const string Scheme = "https://";
-    protected readonly string? ApiKey;
     public static string? BaseUrl;
-    protected readonly HttpClient Client = new();
     private readonly ILogger _logger = Log.ForContext<BunnyClient>();
+    protected readonly string? ApiKey;
+    protected readonly HttpClient Client = new();
     public BunnyClient(string apiKey)
     {
         ApiKey = apiKey;
@@ -26,13 +26,13 @@ public partial class BunnyClient
         Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
         Client.DefaultRequestHeaders.UserAgent.Add(Meta.UserAgent);
         Client.DefaultRequestHeaders.Add("AccessKey", ApiKey);
-        
+
         _logger.Debug("Finished setting up {Type}\n" +
                       "BaseUrl: {BaseUrl}\n" +
                       "_dnsApiUrl: {DnsApiUrl}",
             typeof(BunnyClient),
             BaseUrl,
             _dnsApiUrl
-            );
+        );
     }
 }

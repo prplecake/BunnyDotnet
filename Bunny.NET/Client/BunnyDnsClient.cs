@@ -14,7 +14,7 @@ partial class BunnyClient
         if (!_zones.Any()) _zones = await GetZones();
         return _zones.First(z => z.Domain.ToLower() == zoneName.ToLower());
     }
-    async public Task<List<Zone>> GetZones()
+    public async Task<List<Zone>> GetZones()
     {
         List<Zone> zones = new();
         var response = await Client.GetAsync(_dnsApiUrl);

@@ -1,4 +1,3 @@
-using System.Reflection.Metadata.Ecma335;
 using Bunny.NET.Constants;
 
 namespace Bunny.NET.Tests;

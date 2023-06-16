@@ -14,7 +14,6 @@ public class Config
         return config;
     }
 }
-
 public class Configuration
 {
     public string ApiToken { get; set; }

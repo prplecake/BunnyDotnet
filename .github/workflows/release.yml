@@ -2,7 +2,7 @@ name: .NET Release
 
 on:
   release:
-    types: [published]
+    types: [ published ]
   workflow_dispatch:
 
 permissions:
