@@ -7,12 +7,12 @@ partial class BunnyClient
 {
     private string _apiUrl = $"{BaseUrl}/dnszone";
     private List<Zone> _zones = new();
-    public async Task<Zone> GetDnsZoneByName(string zoneName)
+    public async Task<Zone> GetZoneByName(string zoneName)
     {
-        if (!_zones.Any()) _zones = await GetDnsZones();
+        if (!_zones.Any()) _zones = await GetZones();
         return _zones.First(z => z.Domain.ToLower() == zoneName.ToLower());
     }
-    async public Task<List<Zone>> GetDnsZones()
+    async public Task<List<Zone>> GetZones()
     {
         List<Zone> zones = new();
         var response = await Client.GetAsync(_apiUrl);
