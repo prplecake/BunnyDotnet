@@ -7,7 +7,7 @@ namespace Bunny.NET.Client;
 
 partial class BunnyClient
 {
-    private string _apiUrl = $"{BaseUrl}/dnszone";
+    private string _dnsApiUrl;
     private List<Zone> _zones = new();
     public async Task<Zone> GetZoneByName(string zoneName)
     {
@@ -17,7 +17,7 @@ partial class BunnyClient
     async public Task<List<Zone>> GetZones()
     {
         List<Zone> zones = new();
-        var response = await Client.GetAsync(_apiUrl);
+        var response = await Client.GetAsync(_dnsApiUrl);
         response.EnsureSuccessStatusCode();
         string responseContent = await response.Content.ReadAsStringAsync();
         var obj = JsonConvert.DeserializeObject<DnsZoneApiListResponse>(responseContent);
@@ -40,7 +40,7 @@ partial class BunnyClient
         };
         var stringContent = new StringContent(JsonConvert.SerializeObject(payload), Encoding.Default,
             MediaTypeNames.Application.Json);
-        var requestUri = $"{_apiUrl}/{zoneId}/records/{record.Id}";
+        var requestUri = $"{_dnsApiUrl}/{zoneId}/records/{record.Id}";
         var response = await Client.PostAsync(requestUri, stringContent);
         response.EnsureSuccessStatusCode();
     }
