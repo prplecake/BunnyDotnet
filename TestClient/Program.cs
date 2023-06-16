@@ -3,7 +3,6 @@
 using Bunny.NET.Client;
 using Serilog;
 using TestClient;
-
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Verbose()
     .WriteTo.Console()
@@ -15,6 +14,8 @@ Console.WriteLine("Hello, World!");
 var config = Config.SetupConfiguration();
 
 var bun = new BunnyClient(config.ApiToken);
-var zones = bun.GetZones().Result;
+// var zones = bun.GetZones().Result;
+
+var statistics = bun.GetStatistics().Result;
 
 Console.WriteLine();
