@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bunny.NET", "Bunny.NET\Bunny.NET.csproj", "{47C1C370-1CFC-4893-84D3-607DA96716BF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{95220D61-2851-4A00-BDF8-7FD77D8027AF}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CI Workflows", "CI Workflows", "{C993F40C-0D78-4E7A-95CE-EC8CBF54608C}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
+		.github\workflows\release.yml = .github\workflows\release.yml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{47C1C370-1CFC-4893-84D3-607DA96716BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47C1C370-1CFC-4893-84D3-607DA96716BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47C1C370-1CFC-4893-84D3-607DA96716BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47C1C370-1CFC-4893-84D3-607DA96716BF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C993F40C-0D78-4E7A-95CE-EC8CBF54608C} = {95220D61-2851-4A00-BDF8-7FD77D8027AF}
+	EndGlobalSection
+EndGlobal
