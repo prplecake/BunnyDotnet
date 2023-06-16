@@ -29,4 +29,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{C993F40C-0D78-4E7A-95CE-EC8CBF54608C} = {95220D61-2851-4A00-BDF8-7FD77D8027AF}
 	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C993F40C-0D78-4E7A-95CE-EC8CBF54608C} = {95220D61-2851-4A00-BDF8-7FD77D8027AF}
+	EndGlobalSection
 EndGlobal

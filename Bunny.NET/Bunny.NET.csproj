@@ -4,6 +4,13 @@
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <Version>0.0.1</Version>
+        <Authors>prplecake</Authors>
+        <Description>A C# library for interacting with the Bunny.net APIs.</Description>
+        <PackageProjectUrl>https://github.com/prplecake/BunnyDotnet</PackageProjectUrl>
+        <PackageLicenseUrl>https://github.com/prplecake/BunnyDotnet/blob/master/LICENSE</PackageLicenseUrl>
+        <RepositoryUrl>https://github.com/prplecake/BunnyDotnet</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
     </PropertyGroup>
 
     <ItemGroup>
