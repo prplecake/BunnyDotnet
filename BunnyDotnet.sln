@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bunny.NET", "Bunny.NET\Bunny.NET.csproj", "{47C1C370-1CFC-4893-84D3-607DA96716BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bunny.NET.Tests", "Bunny.NET.Tests\Bunny.NET.Tests.csproj", "{A260F7FE-0602-49DB-B8AA-EEE924418F97}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{47C1C370-1CFC-4893-84D3-607DA96716BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47C1C370-1CFC-4893-84D3-607DA96716BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47C1C370-1CFC-4893-84D3-607DA96716BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47C1C370-1CFC-4893-84D3-607DA96716BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A260F7FE-0602-49DB-B8AA-EEE924418F97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A260F7FE-0602-49DB-B8AA-EEE924418F97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A260F7FE-0602-49DB-B8AA-EEE924418F97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A260F7FE-0602-49DB-B8AA-EEE924418F97}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
