@@ -5,15 +5,17 @@ on:
     types: [published]
   workflow_dispatch:
 
+permissions:
+  checks: write
+  contents: write
+  packages: write
+
 jobs:
   publish:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         dotnet-version: [ '7.0.x' ]
-    permissions:
-      packages: write
-      contents: write
     steps:
       - uses: actions/checkout@v3
         with:
@@ -25,6 +27,14 @@ jobs:
           source-url: https://nuget.pkg.github.com/prplecake/index.json
         env:
           NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Test
+        run: dotnet test --no-build --verbosity normal --logger "trx" --results-directory "./TestResults"
+      - uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: .NET Test Results
+          path: TestResults/*.trx
+          reporter: dotnet-trx
       - name: Pack NuGet
         run: dotnet pack Bunny.NET/Bunny.NET.csproj -c Release
       - name: Upload NuGet
