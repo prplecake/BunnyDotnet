@@ -19,6 +19,7 @@ public partial class BunnyClient
         _apiKeysApiUrl = $"{BaseUrl}/apikey";
         _countriesApiUrl = $"{BaseUrl}/country";
         _dnsApiUrl = $"{BaseUrl}/dnszone";
+        _regionApiUrl = $"{BaseUrl}/region";
         // Configure HttpClient
         Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
         Client.DefaultRequestHeaders.UserAgent.Add(Meta.UserAgent);
