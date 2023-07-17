@@ -29,6 +29,11 @@ partial class BunnyClient
     public async void UpdateRecord(int zoneId, Record record, string newValue)
     {
         // Prep payload
+        DnsRecord.ChangeRequestPayload payload2 = new DnsRecord.ChangeRequestPayload
+        {
+            Id = record.Id,
+            Value = newValue
+        };
         Dictionary<string, object?> payload = new()
         {
             {
@@ -40,9 +45,65 @@ partial class BunnyClient
         };
         var stringContent = new StringContent(JsonConvert.SerializeObject(payload), Encoding.Default,
             MediaTypeNames.Application.Json);
+        var stringContent2 = new StringContent(JsonConvert.SerializeObject(payload2), Encoding.Default,
+            MediaTypeNames.Application.Json);
         var requestUri = $"{_dnsApiUrl}/{zoneId}/records/{record.Id}";
         var response = await Client.PostAsync(requestUri, stringContent);
         response.EnsureSuccessStatusCode();
+    }
+}
+public static class DnsRecord
+{
+    public class ChangeRequestPayload
+    {
+        public Type Type { get; set; }
+        public int Ttl { get; set; }
+        public string Value { get; set; }
+        public string Name { get; set; }
+        public int Weight { get; set; }
+        public int Priority { get; set; }
+        public int Flags { get; set; }
+        public string Tag { get; set; }
+        public int PullZoneId { get; set; }
+        public int ScriptId { get; set; }
+        public bool Accelerated { get; set; }
+        public MonitorType MonitorType { get; set; }
+        public double GeolocationLatitude { get; set; }
+        public double GeolocationLongitude { get; set; }
+        public string LatencyZone { get; set; }
+        public SmartRoutingType SmartRoutingType { get; set; }
+        public bool Disabled { get; set; }
+        public int Id { get; set; }
+        public string Comment { get; set; }
+    }
+    public enum Type
+    {
+        A,
+        AAAA,
+        CNAME,
+        TXT,
+        MX,
+        Redirect,
+        Flatten,
+        PullZone,
+        SRV,
+        CAA,
+        PTR,
+        Script,
+        NS
+    }
+    public enum MonitorType
+    {
+        None,
+        Ping,
+        Http,
+        Monitor
+    }
+    public enum SmartRoutingType
+    {
+        None,
+        Latency,
+        Geolocation
     }
 }
 internal class DnsZoneApiListResponse
