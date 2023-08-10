@@ -38,7 +38,7 @@ jobs:
           path: TestResults/*.trx
           reporter: dotnet-trx
       - name: Pack NuGet
-        run: dotnet pack Bunny.NET/Bunny.NET.csproj -c Release
+        run: dotnet pack src/Bunny.NET/Bunny.NET.csproj -c Release
       - name: Upload NuGet
         run: |
-          dotnet nuget push ./Bunny.NET/bin/Release/Bunny.NET*.nupkg
+          dotnet nuget push ./src/Bunny.NET/bin/Release/Bunny.NET*.nupkg

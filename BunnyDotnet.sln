@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bunny.NET", "Bunny.NET\Bunny.NET.csproj", "{47C1C370-1CFC-4893-84D3-607DA96716BF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bunny.NET", "src\Bunny.NET\Bunny.NET.csproj", "{47C1C370-1CFC-4893-84D3-607DA96716BF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{95220D61-2851-4A00-BDF8-7FD77D8027AF}"
 	ProjectSection(SolutionItems) = preProject
@@ -15,9 +15,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CI Workflows", "CI Workflow
 		.github\workflows\release.yml = .github\workflows\release.yml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bunny.NET.Tests", "Bunny.NET.Tests\Bunny.NET.Tests.csproj", "{8853F933-6D88-4665-9D13-AC40AE33E5D5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bunny.NET.Tests", "tests\Bunny.NET.Tests\Bunny.NET.Tests.csproj", "{8853F933-6D88-4665-9D13-AC40AE33E5D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestClient", "TestClient\TestClient.csproj", "{9BEA3D69-0C45-4540-8D00-A4A0A08E2317}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestClient", "src\TestClient\TestClient.csproj", "{9BEA3D69-0C45-4540-8D00-A4A0A08E2317}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6ACCB39A-E8B8-4D36-9944-2290C0A5AA5B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{E589C5FA-5C31-44AE-8B19-99E7BB3FDFE2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,6 +44,9 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C993F40C-0D78-4E7A-95CE-EC8CBF54608C} = {95220D61-2851-4A00-BDF8-7FD77D8027AF}
+		{47C1C370-1CFC-4893-84D3-607DA96716BF} = {6ACCB39A-E8B8-4D36-9944-2290C0A5AA5B}
+		{8853F933-6D88-4665-9D13-AC40AE33E5D5} = {E589C5FA-5C31-44AE-8B19-99E7BB3FDFE2}
+		{9BEA3D69-0C45-4540-8D00-A4A0A08E2317} = {6ACCB39A-E8B8-4D36-9944-2290C0A5AA5B}
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C993F40C-0D78-4E7A-95CE-EC8CBF54608C} = {95220D61-2851-4A00-BDF8-7FD77D8027AF}

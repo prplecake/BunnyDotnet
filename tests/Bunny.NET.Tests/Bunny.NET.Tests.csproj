@@ -22,7 +22,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Bunny.NET\Bunny.NET.csproj"/>
+        <ProjectReference Include="..\..\src\Bunny.NET\Bunny.NET.csproj"/>
     </ItemGroup>
 
 </Project>
