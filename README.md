@@ -1,3 +1,8 @@
+[![.NET](https://github.com/prplecake/BunnyDotnet/actions/workflows/dotnet.yml/badge.svg)](https://github.com/prplecake/BunnyDotnet/actions/workflows/dotnet.yml)
+[![.NET Release](https://github.com/prplecake/BunnyDotnet/actions/workflows/release.yml/badge.svg)](https://github.com/prplecake/BunnyDotnet/actions/workflows/release.yml)
+[![codecov](https://codecov.io/gh/prplecake/BunnyDotnet/graph/badge.svg?token=ahgBOlVA1h)](https://codecov.io/gh/prplecake/BunnyDotnet)
+[![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/prplecake/BunnyDotnet?include_prereleases)](https://github.com/prplecake/BunnyDotnet/releases/latest)
+
 # Bunny.NET
 
 A C# library for interacting with the Bunny.net APIs.
