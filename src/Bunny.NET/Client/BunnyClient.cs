@@ -6,10 +6,9 @@ public partial class BunnyClient
     public static string? BaseUrl;
     private readonly ILogger _logger = Log.ForContext<BunnyClient>();
     protected readonly string? ApiKey;
-    protected readonly HttpClient Client = new();
-    public BunnyClient(string apiKey)
+    protected HttpClient Client;
+    public BunnyClient(HttpClient client)
     {
-        ApiKey = apiKey;
         BaseUrl = $"{Scheme}{Host.Endpoint.Api}";
         _apiKeysApiUrl = $"{BaseUrl}/apikey";
         _countriesApiUrl = $"{BaseUrl}/country";
@@ -18,6 +17,7 @@ public partial class BunnyClient
         _regionApiUrl = $"{BaseUrl}/region";
         _statisticsApiUrl = $"{BaseUrl}/statistics";
         // Configure HttpClient
+        Client = client;
         Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
         Client.DefaultRequestHeaders.UserAgent.Add(Meta.UserAgent);
         Client.DefaultRequestHeaders.Add("AccessKey", ApiKey);
@@ -29,5 +29,13 @@ public partial class BunnyClient
             BaseUrl,
             _dnsApiUrl
         );
+    }
+    public BunnyClient(string apiKey) : this(new HttpClient())
+    {
+        ApiKey = apiKey;
+    }
+    public BunnyClient(string apiKey, HttpClient client) : this(client)
+    {
+        ApiKey = apiKey;
     }
 }
