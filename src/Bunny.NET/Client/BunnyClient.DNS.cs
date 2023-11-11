@@ -50,17 +50,28 @@ partial class BunnyClient
                 return new Result {StatusCode = response.StatusCode, Success = false};
         }
     }
-    public async Task<List<Zone>> GetZones()
+    public async Task<Result<List<Zone>>> GetZones()
     {
         List<Zone> zones = new();
         var response = await Client.GetAsync(_dnsApiUrl);
-        response.EnsureSuccessStatusCode();
-        string responseContent = await response.Content.ReadAsStringAsync();
-        var obj = JsonConvert.DeserializeObject<DnsZoneApiListResponse>(responseContent);
-        // TODO: implement paging
-        zones.AddRange(obj.Items);
-        _zones = zones;
-        return zones;
+        switch (response.StatusCode)
+        {
+            case HttpStatusCode.Unauthorized:
+                return new Result<List<Zone>> { StatusCode = response.StatusCode, Success = false };
+            case HttpStatusCode.InternalServerError:
+                return new Result<List<Zone>> { StatusCode = response.StatusCode, Success = false };
+            case HttpStatusCode.OK:
+
+                response.EnsureSuccessStatusCode();
+                string responseContent = await response.Content.ReadAsStringAsync();
+                var obj = JsonConvert.DeserializeObject<DnsZoneApiListResponse>(responseContent);
+                // TODO: implement paging
+                zones.AddRange(obj.Items);
+                _zones = zones;
+                return new Result<List<Zone>> { StatusCode = response.StatusCode, Success = true, Data = zones };
+            default:
+                return new Result<List<Zone>> { StatusCode = response.StatusCode, Success = false };
+        }
     }
     public async void UpdateRecord(int zoneId, Record record, string newValue)
     {
