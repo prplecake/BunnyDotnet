@@ -6,6 +6,10 @@ public class Result
     public HttpStatusCode? StatusCode { get; set; }
     public bool Success { get; set; }
 }
+public class Result<T> : Result
+{
+    public T? Data { get; set; }
+}
 public class ResultError
 {
     public string? ErrorKey { get; set; }

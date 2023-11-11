@@ -10,6 +10,25 @@ partial class BunnyClient
         if (!_zones.Any()) _zones = await GetZones();
         return _zones.First(z => z.Domain.ToLower() == zoneName.ToLower());
     }
+    public async Task<Result<Zone>> GetZoneById(int zoneId)
+    {
+        var response = await Client.GetAsync($"{_dnsApiUrl}/{zoneId}");
+        string responseContent = await response.Content.ReadAsStringAsync();
+        switch (response.StatusCode)
+        {
+            case HttpStatusCode.OK:
+                var zone = JsonConvert.DeserializeObject<Zone>(responseContent);
+                return new Result<Zone> {StatusCode = response.StatusCode, Success = true, Data = zone};
+            case HttpStatusCode.BadRequest:
+                return new Result<Zone> {StatusCode = response.StatusCode, Success = false};
+            case HttpStatusCode.NotFound:
+                return new Result<Zone> {StatusCode = response.StatusCode, Success = false};
+            case HttpStatusCode.InternalServerError:
+                return new Result<Zone> {StatusCode = response.StatusCode, Success = false};
+            default:
+                return new Result<Zone> {StatusCode = response.StatusCode, Success = false};
+        }
+    }
     public async Task<Result> AddZone(string domain)
     {
         var response = await Client.PostAsync(_dnsApiUrl,
