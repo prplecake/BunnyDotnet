@@ -1,7 +1,6 @@
 using System.Net;
 using Bunny.NET.Client;
 using Bunny.NET.Entities;
-using Moq;
 using Moq.Protected;
 using Newtonsoft.Json;
 
