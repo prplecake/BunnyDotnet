@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <Version>0.0.5</Version>
@@ -11,6 +10,7 @@
         <PackageLicenseUrl>https://github.com/prplecake/BunnyDotnet/blob/master/LICENSE</PackageLicenseUrl>
         <RepositoryUrl>https://github.com/prplecake/BunnyDotnet</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
+        <TargetFrameworks>net7.0;net6.0;net8.0</TargetFrameworks>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
