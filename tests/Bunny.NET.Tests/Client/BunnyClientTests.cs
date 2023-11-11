@@ -1,5 +1,4 @@
 using Bunny.NET.Client;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Bunny.NET.Tests.Client;
 
