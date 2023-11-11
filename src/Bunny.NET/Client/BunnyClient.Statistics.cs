@@ -6,7 +6,7 @@ namespace Bunny.NET.Client;
 partial class BunnyClient
 {
     private string _statisticsApiUrl;
-    public async Task<Statistics> GetStatistics(
+    public async Task<Result<Statistics>> GetStatistics(
         DateTime? dateFrom = null,
         DateTime? dateTo = null,
         int? pullZoneId = null,
@@ -30,9 +30,10 @@ partial class BunnyClient
         var response = await Client.GetAsync(string.IsNullOrEmpty(queryString)
             ? _statisticsApiUrl
             : $"{_statisticsApiUrl}?{queryString}");
-        response.EnsureSuccessStatusCode();
+        if (!response.IsSuccessStatusCode)
+            return new Result<Statistics> { StatusCode = response.StatusCode, Success = false };
         string responseContent = await response.Content.ReadAsStringAsync();
         var obj = JsonConvert.DeserializeObject<Statistics>(responseContent);
-        return obj;
+        return new Result<Statistics> { StatusCode = response.StatusCode, Success = true, Data = obj };
     }
 }
