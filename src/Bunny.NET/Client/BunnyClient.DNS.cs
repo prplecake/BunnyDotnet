@@ -1,8 +1,3 @@
-using System.Net.Mime;
-using System.Text;
-using Bunny.NET.Entities;
-using Newtonsoft.Json;
-
 namespace Bunny.NET.Client;
 
 [PublicAPI]
