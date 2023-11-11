@@ -1,3 +1,5 @@
+using System.Net;
+
 namespace Bunny.NET.Entities;
 
 public class Result
