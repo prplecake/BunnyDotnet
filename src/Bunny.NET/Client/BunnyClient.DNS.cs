@@ -7,7 +7,14 @@ partial class BunnyClient
     private List<Zone> _zones = new();
     public async Task<Zone> GetZoneByName(string zoneName)
     {
-        if (!_zones.Any()) _zones = await GetZones();
+        if (!_zones.Any())
+        {
+            var result = await GetZones();
+            if (result is { Success: true, Data: not null })
+            {
+                _zones = result.Data;
+            }
+        }
         return _zones.First(z => z.Domain.ToLower() == zoneName.ToLower());
     }
     public async Task<Result<Zone>> GetZoneById(int zoneId)
