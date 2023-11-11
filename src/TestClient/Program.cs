@@ -1,21 +1,27 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using Bunny.NET.Client ;
+using Serilog ;
 
-using Bunny.NET.Client;
-using Serilog;
-using TestClient;
-Log.Logger = new LoggerConfiguration()
-    .MinimumLevel.Verbose()
-    .WriteTo.Console()
-    .Enrich.FromLogContext()
-    .CreateLogger();
+namespace TestClient;
 
-Console.WriteLine("Hello, World!");
+class Program
+{
+    static void Main()
+    {
+        Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Verbose()
+            .WriteTo.Console()
+            .Enrich.FromLogContext()
+            .CreateLogger();
 
-var config = Config.SetupConfiguration();
+        Console.WriteLine("Hello, World!");
 
-var bun = new BunnyClient(config.ApiToken);
-// var zones = bun.GetZones().Result;
+        var config = Config.SetupConfiguration();
 
-var statistics = bun.GetStatistics().Result;
+        var bun = new BunnyClient(config.ApiToken);
+    // var zones = bun.GetZones().Result;
 
-Console.WriteLine();
+        var statistics = bun.GetStatistics().Result;
+
+        Console.WriteLine();
+    }
+}
