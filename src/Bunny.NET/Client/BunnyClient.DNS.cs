@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 
 namespace Bunny.NET.Client;
 
+[PublicAPI]
 partial class BunnyClient
 {
     private string _dnsApiUrl;
