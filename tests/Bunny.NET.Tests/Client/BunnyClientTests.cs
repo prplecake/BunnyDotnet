@@ -2,13 +2,14 @@ using Bunny.NET.Client;
 
 namespace Bunny.NET.Tests.Client;
 
+[TestClass]
 public class BunnyClientTests
 {
-    [Fact]
+    [TestMethod]
     public void HttpClient_BaseUrl_HasProtocol()
     {
-        var client = new BunnyClient("testing-token");
+        _ = new BunnyClient(TestData.TestApiKey);
 
-        Assert.StartsWith(BunnyClient.Scheme, BunnyClient.BaseUrl);
+        Assert.IsTrue(BunnyClient.BaseUrl?.StartsWith(BunnyClient.Scheme));
     }
 }

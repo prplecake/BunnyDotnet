@@ -2,12 +2,13 @@ using Bunny.NET.Constants;
 
 namespace Bunny.NET.Tests;
 
+[TestClass]
 public class HeaderValidationTests
 {
-    [Fact]
+    [TestMethod]
     public void UserAgent_Header_IsValid()
     {
         var uaHeader = Meta.UserAgent;
-        Assert.NotNull(uaHeader);
+        Assert.IsNotNull(uaHeader);
     }
 }
