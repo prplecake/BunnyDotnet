@@ -5,17 +5,26 @@ partial class BunnyClient
 {
     private string _dnsApiUrl;
     private List<Zone> _zones = new();
-    public async Task<Zone> GetZoneByName(string zoneName)
+    public async Task<Result> AddZone(string domain)
     {
-        if (!_zones.Any())
+        var response = await Client.PostAsync(_dnsApiUrl,
+            new StringContent(JsonConvert.SerializeObject(new { Domain = domain }), Encoding.Default,
+                MediaTypeNames.Application.Json));
+        switch (response.StatusCode)
         {
-            var result = await GetZones();
-            if (result is { Success: true, Data: not null })
-            {
-                _zones = result.Data;
-            }
+            case HttpStatusCode.OK:
+                return new Result { StatusCode = response.StatusCode, Success = true };
+            case HttpStatusCode.BadRequest:
+                string responseContent = await response.Content.ReadAsStringAsync();
+                var errorObj = JsonConvert.DeserializeObject<ResultError>(responseContent);
+                return new Result { StatusCode = response.StatusCode, Success = false, Error = errorObj };
+            case HttpStatusCode.Unauthorized:
+                return new Result { StatusCode = response.StatusCode, Success = false };
+            case HttpStatusCode.InternalServerError:
+                return new Result { StatusCode = response.StatusCode, Success = false };
+            default:
+                return new Result { StatusCode = response.StatusCode, Success = false };
         }
-        return _zones.First(z => z.Domain.ToLower() == zoneName.ToLower());
     }
     public async Task<Result<Zone>> GetZoneById(int zoneId)
     {
@@ -25,37 +34,29 @@ partial class BunnyClient
         {
             case HttpStatusCode.OK:
                 var zone = JsonConvert.DeserializeObject<Zone>(responseContent);
-                return new Result<Zone> {StatusCode = response.StatusCode, Success = true, Data = zone};
+                return new Result<Zone> { StatusCode = response.StatusCode, Success = true, Data = zone };
             case HttpStatusCode.BadRequest:
-                return new Result<Zone> {StatusCode = response.StatusCode, Success = false};
+                return new Result<Zone> { StatusCode = response.StatusCode, Success = false };
             case HttpStatusCode.NotFound:
-                return new Result<Zone> {StatusCode = response.StatusCode, Success = false};
+                return new Result<Zone> { StatusCode = response.StatusCode, Success = false };
             case HttpStatusCode.InternalServerError:
-                return new Result<Zone> {StatusCode = response.StatusCode, Success = false};
+                return new Result<Zone> { StatusCode = response.StatusCode, Success = false };
             default:
-                return new Result<Zone> {StatusCode = response.StatusCode, Success = false};
+                return new Result<Zone> { StatusCode = response.StatusCode, Success = false };
         }
     }
-    public async Task<Result> AddZone(string domain)
+    public async Task<Zone> GetZoneByName(string zoneName)
     {
-        var response = await Client.PostAsync(_dnsApiUrl,
-            new StringContent(JsonConvert.SerializeObject(new { Domain = domain }), Encoding.Default,
-                MediaTypeNames.Application.Json));
-        switch (response.StatusCode)
+        if (!_zones.Any())
         {
-            case HttpStatusCode.OK:
-                return new Result {StatusCode = response.StatusCode, Success = true};
-            case HttpStatusCode.BadRequest:
-                string responseContent = await response.Content.ReadAsStringAsync();
-                var errorObj = JsonConvert.DeserializeObject<ResultError>(responseContent);
-                return new Result {StatusCode = response.StatusCode, Success = false, Error = errorObj};
-            case HttpStatusCode.Unauthorized:
-                return new Result {StatusCode = response.StatusCode, Success = false};
-            case HttpStatusCode.InternalServerError:
-                return new Result {StatusCode = response.StatusCode, Success = false};
-            default:
-                return new Result {StatusCode = response.StatusCode, Success = false};
+            var result = await GetZones();
+            if (result is
+                { Success: true, Data: not null })
+            {
+                _zones = result.Data;
+            }
         }
+        return _zones.First(z => z.Domain.ToLower() == zoneName.ToLower());
     }
     public async Task<Result<List<Zone>>> GetZones()
     {
@@ -83,20 +84,10 @@ partial class BunnyClient
     public async void UpdateRecord(int zoneId, Record record, string newValue)
     {
         // Prep payload
-        DnsRecord.ChangeRequestPayload payload2 = new DnsRecord.ChangeRequestPayload
-        {
-            Id = record.Id,
-            Value = newValue
-        };
+        var payload2 = new DnsRecord.ChangeRequestPayload { Id = record.Id, Value = newValue };
         Dictionary<string, object?> payload = new()
-        {
-            {
-                "Id", record.Id
-            },
-            {
-                "Value", newValue
-            }
-        };
+        { { "Id", record.Id },
+          { "Value", newValue } };
         var stringContent = new StringContent(JsonConvert.SerializeObject(payload), Encoding.Default,
             MediaTypeNames.Application.Json);
         var stringContent2 = new StringContent(JsonConvert.SerializeObject(payload2), Encoding.Default,
@@ -108,27 +99,18 @@ partial class BunnyClient
 }
 public static class DnsRecord
 {
-    public class ChangeRequestPayload
+    public enum MonitorType
     {
-        public Type Type { get; set; }
-        public int Ttl { get; set; }
-        public string Value { get; set; }
-        public string Name { get; set; }
-        public int Weight { get; set; }
-        public int Priority { get; set; }
-        public int Flags { get; set; }
-        public string Tag { get; set; }
-        public int PullZoneId { get; set; }
-        public int ScriptId { get; set; }
-        public bool Accelerated { get; set; }
-        public MonitorType MonitorType { get; set; }
-        public double GeolocationLatitude { get; set; }
-        public double GeolocationLongitude { get; set; }
-        public string LatencyZone { get; set; }
-        public SmartRoutingType SmartRoutingType { get; set; }
-        public bool Disabled { get; set; }
-        public int Id { get; set; }
-        public string Comment { get; set; }
+        None,
+        Ping,
+        Http,
+        Monitor
+    }
+    public enum SmartRoutingType
+    {
+        None,
+        Latency,
+        Geolocation
     }
     public enum Type
     {
@@ -146,18 +128,27 @@ public static class DnsRecord
         Script,
         NS
     }
-    public enum MonitorType
+    public class ChangeRequestPayload
     {
-        None,
-        Ping,
-        Http,
-        Monitor
-    }
-    public enum SmartRoutingType
-    {
-        None,
-        Latency,
-        Geolocation
+        public bool Accelerated { get; set; }
+        public string Comment { get; set; }
+        public bool Disabled { get; set; }
+        public int Flags { get; set; }
+        public double GeolocationLatitude { get; set; }
+        public double GeolocationLongitude { get; set; }
+        public int Id { get; set; }
+        public string LatencyZone { get; set; }
+        public MonitorType MonitorType { get; set; }
+        public string Name { get; set; }
+        public int Priority { get; set; }
+        public int PullZoneId { get; set; }
+        public int ScriptId { get; set; }
+        public SmartRoutingType SmartRoutingType { get; set; }
+        public string Tag { get; set; }
+        public int Ttl { get; set; }
+        public Type Type { get; set; }
+        public string Value { get; set; }
+        public int Weight { get; set; }
     }
 }
 internal class DnsZoneApiListResponse
