@@ -5,6 +5,29 @@ partial class BunnyClient
 {
     private string _dnsApiUrl;
     private List<Zone> _zones = new();
+    public async Task<Result> AddRecord(int zoneId, Record record)
+    {
+        // Prep payload
+        var payload = new DnsRecord.ChangeRequestPayload(record);
+        var stringContent = new StringContent(
+            JsonConvert.SerializeObject(payload, Formatting.None,
+                new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }), Encoding.Default,
+            MediaTypeNames.Application.Json);
+
+        var requestUri = $"{_dnsApiUrl}/{zoneId}/records";
+        var response = await Client.PutAsync(requestUri, stringContent);
+        switch (response.StatusCode)
+        {
+            case HttpStatusCode.NoContent:
+                return new Result { StatusCode = response.StatusCode, Success = true };
+            case HttpStatusCode.BadRequest:
+                string responseContent = await response.Content.ReadAsStringAsync();
+                var errorObj = JsonConvert.DeserializeObject<ResultError>(responseContent);
+                return new Result { StatusCode = response.StatusCode, Success = false, Error = errorObj };
+            default:
+                return new Result { StatusCode = response.StatusCode, Success = false };
+        }
+    }
     public async Task<Result> AddZone(string domain)
     {
         var response = await Client.PostAsync(_dnsApiUrl,
