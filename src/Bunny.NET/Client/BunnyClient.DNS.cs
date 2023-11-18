@@ -144,6 +144,15 @@ partial class BunnyClient
         _zones = zones;
         return new Result<List<Zone>> { StatusCode = response.StatusCode, Success = true, Data = zones };
     }
+    public async Task<Result<ZoneStatistics>> GetZoneStatistics(int zoneId)
+    {
+        var response = await Client.GetAsync($"{_dnsApiUrl}/{zoneId}/statistics");
+        string responseContent = await response.Content.ReadAsStringAsync();
+        if (!response.IsSuccessStatusCode)
+            return new Result<ZoneStatistics> { StatusCode = response.StatusCode, Success = false };
+        var zoneStatistics = JsonConvert.DeserializeObject<ZoneStatistics>(responseContent);
+        return new Result<ZoneStatistics> { StatusCode = response.StatusCode, Success = true, Data = zoneStatistics };
+    }
     public async Task<Result> UpdateRecord(int zoneId, Record record)
     {
         // Prep payload

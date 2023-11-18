@@ -8,3 +8,9 @@ public class Zone
     /// <inheritdoc />
     public override string ToString() => Domain ?? nameof(Zone);
 }
+public class ZoneStatistics
+{
+    public int TotalQueriesServed { get; set; }
+    public object QueriesServedChart { get; set; }
+    public object QueriesByTypeChart { get; set; }
+}
