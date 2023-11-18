@@ -13,6 +13,8 @@ settings.yml
 *.userosscache
 *.sln.docstates
 
+.idea/.idea.BunnyDotnet/.idea/aws.xml
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
