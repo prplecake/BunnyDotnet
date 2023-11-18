@@ -87,6 +87,27 @@ partial class BunnyClient
                 return new Result<string> { StatusCode = result.StatusCode, Success = false };
         }
     }
+    public async Task<Result<object>> GetZoneAvailability(string zoneName)
+    {
+        var stringContent = new StringContent(
+            JsonConvert.SerializeObject(new { Name = zoneName }), Encoding.Default,
+            MediaTypeNames.Application.Json);
+        var response = await Client.PostAsync($"{_dnsApiUrl}/checkavailability", stringContent);
+        string responseContent;
+        switch (response.StatusCode)
+        {
+            case HttpStatusCode.OK:
+                responseContent = await response.Content.ReadAsStringAsync();
+                object? obj = JsonConvert.DeserializeObject(responseContent);
+                return new Result<object> { StatusCode = response.StatusCode, Success = true, Data = obj };
+            case HttpStatusCode.BadRequest:
+                responseContent = await response.Content.ReadAsStringAsync();
+                var errorObj = JsonConvert.DeserializeObject<ResultError>(responseContent);
+                return new Result<object> { StatusCode = response.StatusCode, Success = false, Error = errorObj };
+            default:
+                return new Result<object> { StatusCode = response.StatusCode, Success = false };
+        }
+    }
     public async Task<Result<Zone>> GetZoneById(int zoneId)
     {
         var response = await Client.GetAsync($"{_dnsApiUrl}/{zoneId}");
