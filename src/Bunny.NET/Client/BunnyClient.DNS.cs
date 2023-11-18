@@ -22,6 +22,21 @@ partial class BunnyClient
                 return new Result { StatusCode = response.StatusCode, Success = false };
         }
     }
+    public async Task<Result> DeleteRecord(int zoneId, int recordId)
+    {
+        var response = await Client.DeleteAsync($"{_dnsApiUrl}/{zoneId}/records/{recordId}");
+        switch (response.StatusCode)
+        {
+            case HttpStatusCode.NoContent:
+                return new Result { StatusCode = response.StatusCode, Success = true };
+            case HttpStatusCode.BadRequest:
+                string responseContent = await response.Content.ReadAsStringAsync();
+                var errorObj = JsonConvert.DeserializeObject<ResultError>(responseContent);
+                return new Result { StatusCode = response.StatusCode, Success = false, Error = errorObj };
+            default:
+                return new Result { StatusCode = response.StatusCode, Success = false };
+        }
+    }
     public async Task<Result<Zone>> GetZoneById(int zoneId)
     {
         var response = await Client.GetAsync($"{_dnsApiUrl}/{zoneId}");
