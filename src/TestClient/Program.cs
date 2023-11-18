@@ -17,10 +17,11 @@ class Program
 
         var config = Config.SetupConfiguration();
 
-        var bun = new BunnyClient(config.ApiToken);
-    // var zones = bun.GetZones().Result;
-
-        var statistics = bun.GetStatistics().Result;
+        var bun = new BunnyClient()
+            .SetApiKey(config.ApiToken)
+            .CreateClient();
+        var zones = bun.GetZones().Result;
+        // var statistics = bun.GetStatistics().Result;
 
         Console.WriteLine();
     }
