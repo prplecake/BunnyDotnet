@@ -69,7 +69,7 @@ partial class BunnyClient
         var response = await Client.GetAsync($"{_dnsApiUrl}/{zoneId}");
         string responseContent = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
-            return new() { StatusCode = response.StatusCode, Success = false };
+            return new Result<Zone> { StatusCode = response.StatusCode, Success = false };
         var zone = JsonConvert.DeserializeObject<Zone>(responseContent);
         return new Result<Zone> { StatusCode = response.StatusCode, Success = true, Data = zone };
     }
@@ -91,7 +91,7 @@ partial class BunnyClient
         List<Zone> zones = new();
         var response = await Client.GetAsync(_dnsApiUrl);
         if (!response.IsSuccessStatusCode)
-            return new() { StatusCode = response.StatusCode, Success = false };
+            return new Result<List<Zone>> { StatusCode = response.StatusCode, Success = false };
 
         string responseContent = await response.Content.ReadAsStringAsync();
         var obj = JsonConvert.DeserializeObject<DnsZoneApiListResponse>(responseContent);
