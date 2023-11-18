@@ -52,6 +52,18 @@ partial class BunnyClient
                 return new Result { StatusCode = response.StatusCode, Success = false };
         }
     }
+    public async Task<Result<string>> ExportZone(int zoneId)
+    {
+        var result = await Client.GetAsync($"{_dnsApiUrl}/{zoneId}/export");
+        switch (result.StatusCode)
+        {
+            case HttpStatusCode.OK:
+                string responseContent = await result.Content.ReadAsStringAsync();
+                return new Result<string> { StatusCode = result.StatusCode, Success = true, Data = responseContent };
+            default:
+                return new Result<string> { StatusCode = result.StatusCode, Success = false };
+        }
+    }
     public async Task<Result<Zone>> GetZoneById(int zoneId)
     {
         var response = await Client.GetAsync($"{_dnsApiUrl}/{zoneId}");
