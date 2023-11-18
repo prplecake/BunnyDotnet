@@ -58,7 +58,6 @@ partial class BunnyClient
         _zones = zones;
         return new Result<List<Zone>> { StatusCode = response.StatusCode, Success = true, Data = zones };
     }
-    // TODO: Add UpdateRecord overloads
     public async Task<Result> UpdateRecord(int zoneId, Record record)
     {
         // Prep payload
