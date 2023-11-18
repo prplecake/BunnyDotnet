@@ -15,7 +15,9 @@ public class BunnyClientCountriesTests
     {
         _mockHttpMessageHandler = new Mock<HttpMessageHandler>();
         var httpClient = new HttpClient(_mockHttpMessageHandler.Object);
-        _client = new BunnyClient(TestData.TestApiKey, httpClient);
+        _client = new BunnyClient()
+            .SetApiKey(TestData.TestApiKey)
+            .CreateClient(httpClient);
     }
     [DataTestMethod]
     [DataRow(HttpStatusCode.Unauthorized)]
