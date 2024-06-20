@@ -1,5 +1,3 @@
-using System.Net.Http.Headers;
-
 namespace Bunny.NET.Constants;
 
 public class Meta

@@ -1,9 +1,6 @@
 using System.Net;
 using Bunny.NET.Client;
-using Bunny.NET.Entities;
-using Bunny.NET.Tests.TestHelpers;
 using Moq.Protected;
-using Newtonsoft.Json;
 
 namespace Bunny.NET.Tests.Client;
 

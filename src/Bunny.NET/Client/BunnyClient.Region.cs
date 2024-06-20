@@ -1,7 +1,4 @@
-﻿using Bunny.NET.Entities;
-using Newtonsoft.Json;
-
-namespace Bunny.NET.Client;
+﻿namespace Bunny.NET.Client;
 
 partial class BunnyClient
 {

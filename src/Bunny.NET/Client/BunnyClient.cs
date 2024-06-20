@@ -1,8 +1,3 @@
-using System.Net.Http.Headers;
-using System.Net.Mime;
-using Bunny.NET.Constants;
-using Serilog;
-
 namespace Bunny.NET.Client;
 
 public partial class BunnyClient
