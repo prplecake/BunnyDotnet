@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace Bunny.NET.Client;
 
 [PublicAPI]
@@ -176,7 +178,42 @@ partial class BunnyClient
                 return new Result { StatusCode = response.StatusCode, Success = false };
         }
     }
+    public async Task<Result> UpdateZone(int zoneId, ZoneChangeRequest changeRequest)
+    {
+        var stringContent = new StringContent(JsonConvert.SerializeObject(changeRequest, Formatting.None,
+                new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }), Encoding.Default,
+            MediaTypeNames.Application.Json);
+
+        var requestUri = $"{_dnsApiUrl}/{zoneId}";
+        var response = await Client.PostAsync(requestUri, stringContent);
+        switch (response.StatusCode)
+        {
+            case HttpStatusCode.OK:
+                return new Result { StatusCode = response.StatusCode, Success = true };
+            default:
+                return new Result { StatusCode = response.StatusCode, Success = false };
+        }
+    }
 }
+[PublicAPI]
+public class ZoneChangeRequest
+{
+    public bool? CustomNameserversEnabled { get; set; }
+    public string? Nameserver1 { get; set; }
+    public string? Nameserver2 { get; set; }
+    public string? SoaEmail { get; set; }
+    public bool? LoggingEnabled { get; set; }
+    public LogAnonymizationType? LogAnonymizationType { get; set; }
+    [JsonPropertyName("LoggingIPAnonymizationEnabled")]
+    public bool? LoggingIpAnonymizationEnabled { get; set; }
+}
+[PublicAPI]
+public enum LogAnonymizationType
+{
+    OneDigit,
+    Drop
+}
+
 [PublicAPI]
 public static class DnsRecord
 {
