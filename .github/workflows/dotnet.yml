@@ -119,9 +119,5 @@ jobs:
           path: ${{ env.NuGetDir }}
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
-        with:
-          source-url: https://api.nuget.org/v3/index.json
-        env:
-          NUGET_AUTH_TOKEN: ${{ secrets.NUGET_API_KEY }}
       - name: Publish to NuGet
-        run: dotnet nuget push ${{ env.NuGetDir }}/*.nupkg --skip-duplicate
+        run: dotnet nuget push --api-key "${{ secrets.NUGET_API_KEY }}" ${{ env.NuGetDir }}/*.nupkg --source https://api.nuget.org/v3/index.json --skip-duplicate
