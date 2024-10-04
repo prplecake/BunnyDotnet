@@ -11,8 +11,13 @@ permissions:
   checks: write
   packages: read
 
+env:
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  DOTNET_NOLOGO: true
+  NuGetDir: ${{ github.workspace }}/nuget
+
 jobs:
-  build:
+  create-nuget:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -25,12 +30,50 @@ jobs:
             6.0.x
             7.0.x
             8.0.x
-      - name: Restore dependencies
-        run: dotnet restore
-      - name: Build
-        run: dotnet build --no-restore
+      - name: Pack
+        run: dotnet pack --configuration Release --output ${{ env.NuGetDir }}
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: nuget
+          if-no-files-found: error
+          retention-days: 7
+          path: ${{ env.NuGetDir }}/*.nupkg
+
+  validate-nuget:
+    runs-on: ubuntu-latest
+    needs: [ create-nuget ]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: nuget
+          path: ${{ env.NuGetDir }}
+      - name: Install NuGet Validator
+        run: dotnet tool update Meziantou.Framework.NuGetPackageValidation.Tool --global
+      - name: Validate package
+        run: meziantou.validate-nuget-package ${{ env.NuGetDir }}/*.nupkg
+
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            6.0.x
+            7.0.x
+            8.0.x
       - name: Test
-        run: dotnet test --no-build --verbosity normal --logger "trx" --results-directory "./TestResults" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Exclude="[Bunny.*.Tests?]*"
+        run: dotnet test --verbosity normal --logger "trx" --results-directory "./TestResults" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Exclude="[Bunny.*.Tests?]*"
       - uses: dorny/test-reporter@v1
         if: always()
         with:
@@ -39,3 +82,41 @@ jobs:
           reporter: dotnet-trx
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4
+
+  publish-to-github-packages:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'release'
+    needs: [ validate-nuget, run-tests ]
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: nuget
+          path: ${{ env.NuGetDir }}
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          source-url: https://nuget.pkg.github.com/prplecake/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish to GitHub Packages
+        run: dotnet nuget push ${{ env.NuGetDir }}/*.nupkg --skip-duplicate
+
+  publish-to-nuget:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'release'
+    needs: [ validate-nuget, run-tests ]
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: nuget
+          path: ${{ env.NuGetDir }}
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          source-url: https://api.nuget.org/v3/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{ secrets.NUGET_API_KEY }}
+      - name: Publish to NuGet
+        run: dotnet nuget push ${{ env.NuGetDir }}/*.nupkg --skip-duplicate

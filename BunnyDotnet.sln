@@ -12,7 +12,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CI Workflows", "CI Workflows", "{C993F40C-0D78-4E7A-95CE-EC8CBF54608C}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
-		.github\workflows\release.yml = .github\workflows\release.yml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bunny.NET.Tests", "tests\Bunny.NET.Tests\Bunny.NET.Tests.csproj", "{8853F933-6D88-4665-9D13-AC40AE33E5D5}"
