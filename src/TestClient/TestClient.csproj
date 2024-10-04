@@ -9,7 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Bunny.NET\Bunny.NET.csproj"/>
+        <ProjectReference Include="..\Bunny.API.NET\Bunny.API.NET.csproj" />
     </ItemGroup>
 
     <ItemGroup>
