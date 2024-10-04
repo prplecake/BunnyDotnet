@@ -11,6 +11,7 @@
         <RepositoryUrl>https://github.com/prplecake/BunnyDotnet</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <TargetFrameworks>net7.0;net6.0;net8.0</TargetFrameworks>
+        <PackageId>Bunny.API.NET</PackageId>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
