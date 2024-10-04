@@ -19,7 +19,8 @@
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-        <DebugType>none</DebugType>
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>embedded</DebugType>
     </PropertyGroup>
 
     <ItemGroup>
