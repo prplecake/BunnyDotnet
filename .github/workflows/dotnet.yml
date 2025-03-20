@@ -83,7 +83,7 @@ jobs:
             8.0.x
       - name: Test
         run: dotnet test --verbosity normal --logger "trx" --results-directory "./TestResults" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Exclude="[Bunny.*.Tests?]*"
-      - uses: dorny/test-reporter@v1
+      - uses: dorny/test-reporter@v2
         if: always()
         with:
           name: .NET Test Results
