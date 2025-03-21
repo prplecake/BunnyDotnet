@@ -16,3 +16,7 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "weekly"
+    groups:
+      artifacts-actions:
+        - "actions/upload-artifcat*"
+        - "actions/download-artifact*"
