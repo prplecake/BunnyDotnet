@@ -11,12 +11,14 @@ updates:
       interval: "weekly"
     groups:
       MSTest:
-        - "MSTest.*"
+        patterns:
+          - "MSTest.*"
   - package-ecosystem: "github-actions" # See documentation for possible values
     directory: "/" # Location of package manifests
     schedule:
       interval: "weekly"
     groups:
       artifacts-actions:
-        - "actions/upload-artifcat*"
-        - "actions/download-artifact*"
+        patterns:
+          - "actions/upload-artifcat*"
+          - "actions/download-artifact*"
