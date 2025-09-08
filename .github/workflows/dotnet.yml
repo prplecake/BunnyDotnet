@@ -31,7 +31,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: |
             6.0.x
@@ -55,7 +55,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
       - name: Download artifact
         uses: actions/download-artifact@v5
         with:
@@ -75,7 +75,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: |
             6.0.x
@@ -103,7 +103,7 @@ jobs:
           name: nuget
           path: ${{ env.NuGetDir }}
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           source-url: https://nuget.pkg.github.com/prplecake/index.json
         env:
@@ -122,6 +122,6 @@ jobs:
           name: nuget
           path: ${{ env.NuGetDir }}
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
       - name: Publish to NuGet
         run: dotnet nuget push --api-key "${{ secrets.NUGET_API_KEY }}" ${{ env.NuGetDir }}/*.nupkg --source https://api.nuget.org/v3/index.json --skip-duplicate
