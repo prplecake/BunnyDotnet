@@ -40,7 +40,7 @@ jobs:
       - name: Pack
         run: dotnet pack --configuration Release --output ${{ env.NuGetDir }}
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: nuget
           if-no-files-found: error
